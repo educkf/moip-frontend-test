@@ -6,6 +6,8 @@ import "./registerServiceWorker";
 
 Vue.config.productionTip = false;
 
+import './assets/variables.less';
+
 new Vue({
   router,
   store,

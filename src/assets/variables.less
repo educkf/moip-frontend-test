@@ -1,0 +1,47 @@
+@maincolor: #1543E3;
+@secondcolor: #4A2EA4;
+@thirdcolor: #65DBDD;
+@fontcolor: #3D485A;
+@bgcolor: #E6E9F5;
+@errorcolor: #EE6C34;
+
+* {
+    opacity: 1;
+    transition: opacity 0.25s;
+}
+
+.button {
+    border-radius: 50px;
+    background: @maincolor;
+    text-align: center;
+    color: #fff;
+    padding: 12px 48px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+        opacity: 0.75;
+    }
+}
+
+.heading {
+    font-size: 42px;
+    font-weight: 200;
+    text-transform: uppercase;
+    margin: 0;
+
+    &.underline {
+      &::after {
+        content: ' ';
+        width: 72px;
+        background-color: @thirdcolor;
+        height: 5px;
+        border-radius: 25px;
+        display: block;
+        margin-top: 4px;
+      }
+    }
+}

@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import About from "./views/About.vue";
+import HomePage from "./views/HomePage.vue";
+import InvoicesList from "./views/Invoices/List.vue";
+import InvoicesAdd from "./views/Invoices/Add.vue";
+import PageNotFound from "./views/PageNotFound.vue";
 
 Vue.use(Router);
 
@@ -9,13 +11,22 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      name: "Home",
+      component: HomePage
     },
     {
-      path: "/about",
-      name: "about",
-      component: About
+      path: "/invoices",
+      name: "invoices/list",
+      component: InvoicesList
+    },
+    {
+      path: "/invoices/add",
+      name: "invoices/add",
+      component: InvoicesAdd
+    },
+    { 
+      path: "*", 
+      component: PageNotFound 
     }
   ]
 });
