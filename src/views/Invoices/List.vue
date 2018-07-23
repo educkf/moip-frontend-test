@@ -2,7 +2,7 @@
   <div class="invoices-list">
     <div class="wrapper">
 
-      <BreadCrumb />
+      <BreadCrumb :paths="breadcrumb" />
 
       <header>
         <h1 class="underline">Cobranças</h1>
@@ -44,6 +44,20 @@ export default {
   name: "ListInvoice",
   components: {
     BreadCrumb
+  },
+  data: function() {
+    return {
+      breadcrumb: [ 
+        {
+          to:"/", 
+          title:"Página inicial"
+        }, 
+        { 
+          to: "/invoices",
+          title: "Cobranças"
+        }
+      ]
+    }
   }
 };
 </script>

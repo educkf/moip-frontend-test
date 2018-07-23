@@ -1,7 +1,6 @@
 <template>
   <nav class="breadcrumb">
-    <router-link to="/">Página inicial</router-link>
-    <router-link to="/invoices">Cobranças</router-link>
+    <router-link v-for="(path, i) in paths" :key="i" :to="path.to">{{ path.title }}</router-link>
   </nav>
 </template>
 
@@ -9,6 +8,7 @@
 
 export default {
   name: "BreadCrumb",
+  props: ['paths'],
   components: {}
 };
 </script>
