@@ -1,0 +1,32 @@
+<template>
+    <div class="validation">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 508.52 508.52" style="enable-background:new 0 0 508.52 508.52;" xml:space="preserve"><g><path  d="M254.26,0C113.845,0,0,113.845,0,254.26s113.845,254.26,254.26,254.26      s254.26-113.845,254.26-254.26S394.675,0,254.26,0z M254.26,476.737c-122.68,0-222.477-99.829-222.477-222.477      c0-122.68,99.797-222.477,222.477-222.477c122.649,0,222.477,99.797,222.477,222.477      C476.737,376.908,376.908,476.737,254.26,476.737z"></path><path  d="M254.26,95.347c-17.544,0-31.782,14.239-31.782,31.782v158.912      c0,17.544,14.239,31.782,31.782,31.782s31.782-14.239,31.782-31.782V127.13C286.042,109.586,271.804,95.347,254.26,95.347z"></path><circle  cx="254.26" cy="380.881" r="31.782"></circle></g></svg>
+        {{ text }}
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'FormError',
+        props: ['text']
+    }
+</script>
+
+<style lang="less" scoped>
+
+@import '../assets/variables.less';
+
+.validation {
+    margin: 5px 0;
+    font-size: 13px;
+    color: @errorcolor;
+
+    svg {
+        height: 15px;
+        position: relative;
+        top: 2px;
+        margin-right: 5px;
+        fill: @errorcolor;
+    }
+}
+</style>

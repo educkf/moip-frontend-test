@@ -10,15 +10,81 @@
       <header>
         <h1>Nova cobrança</h1>
       </header>
+      <form @submit.prevent="handleForm()">
+        <h3>Dados da cobrança</h3>
+
+        <label for="value" class="form-field" :class="errors.includes('value') ? 'invalid' : null">
+          <div class="label">Valor</div>
+
+          <div class="field">
+            <span class="prefix">R$</span>
+            <input type="text" name="value" id="value" v-mask="'money'" v-model="value">
+          </div>
+
+          <FormError text="Esse campo é obrigatório" v-if="errors.includes('value')" />
+          
+        </label>
+
+        <label for="email" class="form-field" :class="errors.includes('email') ? 'invalid' : null">
+          <div class="label">Email</div>
+
+          <div class="field">
+            <input type="text" name="email" id="email" v-model="email" >
+          </div>
+          
+          <FormError text="Esse campo é obrigatório" v-if="errors.includes('email')" />
+        </label>
+
+        <label for="addDescription" class="form-field">
+
+          <div class="field">
+            <input type="checkbox" name="addDescription" id="addDescription" v-model="addDescription">
+            <div class="checkbox">
+              <div class="checked"></div>
+            </div>
+          </div>
+          
+          <div class="label">Adicionar motivo</div>
+        </label>
+
+        <label for="description" class="form-field" :class="addDescription && errors.includes('description') ? 'invalid' : null">
+          <div class="label">Motivo</div>
+
+          <div class="field">
+            <input type="text" name="description" id="description" v-model="description">
+          </div>
+          
+          <FormError text="Esse campo é obrigatório" v-if="addDescription && errors.includes('description')" />
+        </label>
+
+        <input type="submit" class="btn" value="Criar">
+
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+import AwesomeMask from 'awesome-mask'
+import FormError from '@/components/FormError'
 
 export default {
   name: "AddInvoice",
-  components: {}
+  components: {
+    FormError
+  },
+  directives: {
+    'mask': AwesomeMask
+  },
+  data: function() {
+    return {
+      value: '10000',
+      email: 'eduardo.ckf@gmail.com',
+      addDescrition: false,
+      description: 'lorem ipsum amet simbilorum',
+      errors: ['email']
+    }
+  }
 };
 </script>
 
@@ -29,6 +95,55 @@ export default {
 header {
   h1 {
     .heading();
+  }
+}
+
+form {
+  width: 90%;
+  max-width: 600px;
+  margin-top: 30px;
+
+  h3 {
+    font-size: 14px;
+    color: @maincolor;
+    border-bottom: 1px solid @maincolor;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+  }
+}
+
+.form-field {
+  width: 85%;
+  margin-top: 25px;
+  overflow: auto;
+  display: block;
+
+  .label {
+    font-size: 13px;
+    font-weight: 700;
+    color: @fontcolor;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .field {
+    border-bottom: 1px solid #999;
+    display: flex;
+
+    .prefix {
+      font-size: 16px;
+      padding-right: 5px;
+      color: #999;
+    }
+    input[type=text], input[type=number], input[type=email], textarea {
+      border: none;
+      width: 100%;
+      outline: none;
+      color: #999;
+      font-size: 16px;
+      font-family: 'Quicksand', sans-serif;
+      padding: 0 2px 3px 2px;
+    }
   }
 }
 

@@ -8,11 +8,16 @@
 
 @import 'assets/variables.less';
 
+body, html {
+  margin: 0;
+}
+
 #app {
   font-family: "Quicksand", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: @fontcolor;
+  overflow: auto;
 }
 
 .wrapper {
