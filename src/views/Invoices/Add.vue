@@ -21,7 +21,7 @@
           <div class="label">Valor</div>
           <div class="field">
             <span class="prefix">R$</span>
-            <input type="text" name="value" id="value" v-mask="'money'" v-model="value">
+            <input type="text" name="value" id="value" v-mask="'money'" v-model="value" placeholder="0,00">
           </div>
           <FormError text="Esse campo é obrigatório" v-if="errors.includes('value')" />
         </label>
@@ -29,13 +29,13 @@
         <label for="email" class="form-field" :class="errors.includes('email') ? 'invalid' : null">
           <div class="label">Email</div>
           <div class="field">
-            <input type="text" name="email" id="email" v-model="email" >
+            <input type="text" name="email" id="email" v-model="email"  placeholder="email@exemplo.com">
           </div>
           <FormError text="Esse campo é obrigatório" v-if="errors.includes('email')" />
         </label>
 
         <label for="addDescription" class="form-field">
-          <div class="checkbox-field">
+          <div class="checkbox-field" :class="addDescription ? 'checked': null">
             <input type="checkbox" name="addDescription" id="addDescription" v-model="addDescription">
             <div class="checkbox">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="45.701px" height="45.7px" viewBox="0 0 45.701 45.7" style="enable-background:new 0 0 45.701 45.7;" xml:space="preserve"><g><path d="M20.687,38.332c-2.072,2.072-5.434,2.072-7.505,0L1.554,26.704c-2.072-2.071-2.072-5.433,0-7.504    c2.071-2.072,5.433-2.072,7.505,0l6.928,6.927c0.523,0.522,1.372,0.522,1.896,0L36.642,7.368c2.071-2.072,5.433-2.072,7.505,0    c0.995,0.995,1.554,2.345,1.554,3.752c0,1.407-0.559,2.757-1.554,3.752L20.687,38.332z"></path></g></svg>
@@ -52,7 +52,7 @@
           <FormError text="Esse campo é obrigatório" v-if="addDescription && errors.includes('description')" />
         </label>
 
-        <button type="submit" class="btn">Criar</button>
+        <button type="submit" class="btn" :class="isValid ? 'invalid' : null">Criar</button>
 
       </form>
     </div>
@@ -81,6 +81,11 @@ export default {
       addDescription: false,
       description: '',
       errors: []
+    }
+  },
+  computed: {
+    isValid() {
+      return this.value == '' || this.email == '' || (this.addDescription && this.description == '')
     }
   },
   methods: {
@@ -132,6 +137,10 @@ form {
   max-width: 600px;
   margin-top: 30px;
 
+  @media screen and (max-width: 540px) {
+    width: 100%;
+  }
+
   h3 {
     font-size: 14px;
     color: @maincolor;
@@ -145,6 +154,10 @@ form {
   width: 85%;
   margin-top: 25px;
   display: block;
+
+  @media screen and (max-width: 540px) {
+    width: 100%;
+  }
 
   &.invalid {
     .label {
@@ -209,10 +222,10 @@ form {
     }
 
     .checkbox {
-      border: 2px solid @fontcolor;
+      border: 2px solid #8990A6;
       border-radius: 2px;
-      width: 16px;
-      height: 16px;
+      width: 21px;
+      height: 21px;
 
       svg {
         fill: @maincolor;
@@ -228,9 +241,15 @@ form {
     .label {
       margin: 1px 0 0 10px;
       font-size: 16px;
-      color: @maincolor;
+      color: @fontcolor;
       font-weight: 400;
       text-transform: none;
+    }
+
+    &.checked {
+      .label {
+        color: @maincolor;
+      }
     }
   }
 }
@@ -260,6 +279,12 @@ nav {
   min-width: 300px;
   margin-top: 30px;
   outline: none;
+  font-weight: 600;
+
+  &.invalid {
+    background: #BFC6D9;
+    color: #8990A6;
+  }
 }
 
 </style>

@@ -10,26 +10,32 @@
       </header>
 
       <table>
-        <tr>
-          <th>Valor</th>
-          <th>Cliente</th>
-          <th>Criado em</th>
-          <th>Motivo</th>
-        </tr>
 
-        <tr v-if="invoices.length == 0">
-          <td>R$ -</td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Valor</th>
+            <th>Cliente</th>
+            <th>Criado em</th>
+            <th>Motivo</th>
+          </tr>
+        </thead>
 
-        <tr v-else v-for="(invoice, i) in invoices" :key="i">
-          <td>R$ {{ invoice.value }}</td>
-          <td>{{ invoice.email }}</td>
-          <td>{{ invoice.createDate | moment }}</td>
-          <td>{{ invoice.description || '-' }}</td>
-        </tr>
+        <tbody>
+          <tr v-if="invoices.length == 0">
+            <td><span>Valor </span> -</td>
+            <td><span>Cliente </span> - </td>
+            <td><span>Criado em </span> - </td>
+            <td><span>Motivo </span> - </td>
+          </tr>
+
+          <tr v-else v-for="(invoice, i) in invoices" :key="i">
+            <td><span>Valor </span>R$ {{ invoice.value }}</td>
+            <td><span>Cliente </span>{{ invoice.email }}</td>
+            <td><span>Criado em </span>{{ invoice.createDate | moment }}</td>
+            <!-- Add class to hide empty description on mobile view -->
+            <td :class="!invoice.description ? 'hide_mobile' : null"><span>Motivo </span>{{ invoice.description || '-' }}</td>
+          </tr>
+        </tbody>
 
       </table>
 
@@ -67,7 +73,8 @@ export default {
   },
   computed: {
     invoices() {
-      return this.$store.state.invoices
+      // sort from newest to oldest
+      return this.$store.state.invoices.sort((a,b) => a.createDate > b.createDate ? -1 : a.createDate < b.createDate ? 1 : 0);
     } 
   },
   methods: {
@@ -112,6 +119,33 @@ header {
   h1 {
     .heading();
   }
+
+  @media screen and (max-width: 750px) {
+    h1 {
+      font-size: 36px;
+    }
+
+    .btn {
+      font-size: 15px;
+      padding: 12px 36px;
+    }
+  }
+
+  @media screen and (max-width: 540px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      font-size: 15px;
+      padding: 14px 36px;
+      width: 100%;
+    }
+  }
 }
 
 .btn {
@@ -134,6 +168,10 @@ table {
     font-size: 15px;
     text-align: left;
     color: @fontcolor;
+
+    span {
+      display: none;
+    }
 
     &:nth-child(1) {
       text-align: right;
@@ -168,6 +206,55 @@ table {
       }
     }
   }
+
+  @media screen and (max-width: 780px) {
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 20px;
+    width: 100%;
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: 10px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      padding: 10px 0;
+    }
+
+    td {
+      display: block;
+      text-align: left !important;
+      border: none;
+      padding: 5px 15px;
+      font-size: 16px;
+      width: 100% !important;
+
+      span {
+        display: block;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        color: @secondcolor;
+      }
+
+      &.hide_mobile {
+        display: none;
+      }
+
+      &:last-child {
+        max-width: initial;
+        text-overflow: initial;
+        white-space: initial;
+        overflow: auto;
+      }
+    }
+  }
 }
 
 .back_top {
@@ -179,6 +266,10 @@ table {
   align-items: center; 
   border: 2px solid @maincolor;
   margin-bottom: 60px;
+
+  @media screen and (max-width: 780px) {
+    margin: 0 auto 60px;
+  }
 
   svg {
     width: 20px;

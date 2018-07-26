@@ -6,7 +6,8 @@
 
 <script>
   export default {
-    mounted() {
+    created() {
+      // action to get invoices from LocalStorage, could also work for API call
       this.$store.dispatch('getInvoices')
     }
   }
@@ -15,6 +16,10 @@
 <style lang="less">
 
 @import 'assets/variables.less';
+
+* {
+  box-sizing: border-box;
+}
 
 body, html {
   margin: 0;
@@ -33,6 +38,10 @@ body, html {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+
+  @media screen and (max-width: 780px) {
+    width: calc(100% - 30px);
+  }
 }
 
 </style>

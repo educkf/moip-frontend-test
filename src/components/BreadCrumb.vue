@@ -1,6 +1,11 @@
 <template>
   <nav class="breadcrumb">
-    <router-link v-for="(path, i) in paths" :key="i" :to="path.to">{{ path.title }}</router-link>
+    <!-- iterate on prop 'paths' to create each breadcrumb step -->
+    <router-link 
+      v-for="(path, i) in paths" 
+      :key="i" 
+      :to="path.to">{{ path.title }}</router-link>
+      
   </nav>
 </template>
 
@@ -19,6 +24,10 @@ export default {
 
 .breadcrumb {
   margin: 24px 0;
+
+  @media screen and (max-width: 540px) {
+    margin: 12px 0;
+  }
 
   a {
     color: @maincolor;
