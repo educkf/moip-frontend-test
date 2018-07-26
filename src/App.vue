@@ -4,6 +4,14 @@
   </div>
 </template>
 
+<script>
+  export default {
+    mounted() {
+      this.$store.dispatch('getInvoices')
+    }
+  }
+</script>
+
 <style lang="less">
 
 @import 'assets/variables.less';

@@ -17,11 +17,18 @@
           <th>Motivo</th>
         </tr>
 
-        <tr v-for="n in 20" :key="n">
-          <td>R$ 100,00</td>
-          <td>eduardo.ckf@gmail.com</td>
-          <td>12/05/2018 &bull; 17h34</td>
-          <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus voluptate modi, delectus aut ullam libero rerum incidunt recusandae sit odio quod dolores commodi doloribus praesentium?</td>
+        <tr v-if="invoices.length == 0">
+          <td>R$ -</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+
+        <tr v-else v-for="(invoice, i) in invoices" :key="i">
+          <td>R$ {{ invoice.value }}</td>
+          <td>{{ invoice.email }}</td>
+          <td>{{ invoice.createDate | moment }}</td>
+          <td>{{ invoice.description || '-' }}</td>
         </tr>
 
       </table>
@@ -36,6 +43,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import BreadCrumb from '@/components/BreadCrumb'
 
 export default {
@@ -57,6 +65,11 @@ export default {
       ]
     }
   },
+  computed: {
+    invoices() {
+      return this.$store.state.invoices
+    } 
+  },
   methods: {
     back_top: function() {
       window.scrollTo({
@@ -64,8 +77,15 @@ export default {
         'left': 0,
         'top': document.getElementById('app').offsetTop
       });
+    },
+    
+  },
+  filters: {
+    moment: function(date) {
+      return moment.unix(date).format('DD/MM/YYYY [•] H[h]m')
     }
-  }
+  },
+  created() {}
 };
 </script>
 
@@ -76,6 +96,7 @@ export default {
 .invoices-list {
   background-color: #E6E9F5;
   overflow: auto;
+  min-height: 100vh;
   
   .wrapper {
     position: relative;
